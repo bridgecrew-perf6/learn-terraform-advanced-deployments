@@ -2,6 +2,13 @@
 
 This demo is based on an official Terraform training demo.  The original readme file  read as follows:
 
+git branches:
+original -- used EC2 VMs for blue/green deployment
+dockler  -- deploy docker container; java app
+
+
+
+
 Learn how to use Terraform and AWS's Application Load Balancers for canary tests and blue/green deployments. Learn how to add feature flags to your Terraform configuration by using variables and conditionals. Follow along with [this
 tutorial](https://learn.hashicorp.com/tutorials/terraform/blue-green-canary-tests-deployments) on HashiCorp Learn.
 

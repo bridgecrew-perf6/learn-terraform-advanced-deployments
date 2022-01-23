@@ -1,3 +1,7 @@
+locals {
+  green_app_version = "1.1"
+}
+
 resource "aws_instance" "green" {
   count = var.enable_green_env ? var.green_instance_count : 0
 
@@ -5,12 +9,14 @@ resource "aws_instance" "green" {
   instance_type          = "t2.micro"
   subnet_id              = module.vpc.public_subnets[count.index % length(module.vpc.public_subnets)]
   vpc_security_group_ids = [module.app_security_group.this_security_group_id]
+  # path.module here = "."; details: https://www.terraform.io/language/expressions/references  
   user_data = templatefile("${path.module}/init-script.sh", {
-    file_content = "Green version 1.1 - #${count.index}"
+    file_content = "Green version ${local.green_app_version} - #${count.index}"
   })
 
   tags = {
-    Name = "green-${count.index}"
+    #Name = "green-${count.index}"
+    Name = "green-version-${local.green_app_version}-${count.index}"
   }
 }
 

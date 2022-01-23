@@ -1,3 +1,7 @@
+locals {
+  blue_app_version = "1.2"
+}
+
 resource "aws_instance" "blue" {
   count = var.enable_blue_env ? var.blue_instance_count : 0
 
@@ -6,11 +10,11 @@ resource "aws_instance" "blue" {
   subnet_id              = module.vpc.public_subnets[count.index % length(module.vpc.public_subnets)]
   vpc_security_group_ids = [module.app_security_group.this_security_group_id]
   user_data = templatefile("${path.module}/init-script.sh", {
-    file_content = "Blue version 1.0 - #${count.index}"
+    file_content = "Blue version ${local.blue_app_version} - #${count.index}"
   })
 
   tags = {
-    Name = "version-1.0-${count.index}"
+    Name = "version-${local.blue_app_version}-${count.index}"
   }
 }
 

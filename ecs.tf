@@ -64,6 +64,3 @@ resource "aws_lb_target_group" "java-app" {
     interval = 10
   }
 }
-
-
-

@@ -90,3 +90,26 @@ After verifying that the resources were deployed successfully, destroy them. Rem
 
 terraform destroy -var 'traffic_distribution=blue'
 
+
+## Convert to docker
+
+aws ecr get-login-password --region us-east-1 --profile terraform-user-pgrm | docker login --username AWS --password-stdin 506504484053.dkr.ecr.us-east-1.amazonaws.com
+
+docker build -t my-first-ecr-repo .
+
+OPTIONAL test for Docker image:
+
+docker run -d -p 3000:3000 my-first-ecr-repo
+docker stop [container id]
+
+Tag the image:
+
+Tag name should be from 
+resource "aws_ecr_repository" "advanced-ecr-repo" {
+  name = "advanced-ecr-repo" 
+
+docker tag spring-boot:1.0 506504484053.dkr.ecr.us-east-1.amazonaws.com/advanced-ecr-repo:latest
+
+Push the image to AWS ECR:
+
+docker push 506504484053.dkr.ecr.us-east-1.amazonaws.com/advanced-ecr-repo:latest

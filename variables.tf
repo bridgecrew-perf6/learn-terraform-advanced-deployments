@@ -62,60 +62,61 @@ variable "private_subnet_cidr_blocks" {
   ]
 }
 
-variable "enable_blue_env" {
-  description = "Enable blue environment"
-  type        = bool
-  default     = true
-}
+# variable "enable_blue_env" {
+#   description = "Enable blue environment"
+#   type        = bool
+#   default     = true
+# }
 
-variable "blue_instance_count" {
-  description = "Number of instances in blue environment"
-  type        = number
-  default     = 2
-}
+# variable "blue_instance_count" {
+#   description = "Number of instances in blue environment"
+#   type        = number
+#   default     = 2
+# }
 
-variable "enable_green_env" {
-  description = "Enable green environment"
-  type        = bool
-  default     = true
-}
+# variable "enable_green_env" {
+#   description = "Enable green environment"
+#   type        = bool
+#   default     = true
+# }
 
-variable "green_instance_count" {
-  description = "Number of instances in green environment"
-  type        = number
-  default     = 2
-}
+# variable "green_instance_count" {
+#   description = "Number of instances in green environment"
+#   type        = number
+#   default     = 2
+# }
 
 /*
 While you could manually modify the load balancer's target groups to include the green environment, using feature toggles codifies this change for you. In this step, you will add a traffic_distribution variable and traffic_dist_map local variable to your configuration. The configuration will automatically assign the target group's weight based on the traffic_distribution variable.
 */
 
-locals {
-  traffic_dist_map = {
-    blue = {
-      blue  = 100
-      green = 0
-    }
-    blue-90 = {
-      blue  = 90
-      green = 10
-    }
-    split = {
-      blue  = 50
-      green = 50
-    }
-    green-90 = {
-      blue  = 10
-      green = 90
-    }
-    green = {
-      blue  = 0
-      green = 100
-    }
-  }
-}
+# locals {
+#   traffic_dist_map = {
+#     blue = {
+#       blue  = 100
+#       green = 0
+#     }
+#     blue-90 = {
+#       blue  = 90
+#       green = 10
+#     }
+#     split = {
+#       blue  = 50
+#       green = 50
+#     }
+#     green-90 = {
+#       blue  = 10
+#       green = 90
+#     }
+#     green = {
+#       blue  = 0
+#       green = 100
+#     }
+#   }
+# }
 
-variable "traffic_distribution" {
-  description = "Levels of traffic distribution (blue|blue-90|split|green-90|green)"
-  type        = string
-}
+# variable "traffic_distribution" {
+#   description = "Levels of traffic distribution (blue|blue-90|split|green-90|green)"
+#   type        = string
+
+# }

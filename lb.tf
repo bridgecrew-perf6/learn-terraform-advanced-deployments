@@ -4,7 +4,8 @@ resource "aws_lb" "app" {
   internal           = false
   load_balancer_type = "application"
   subnets            = module.vpc.public_subnets
-  security_groups    = [module.lb_security_group.this_security_group_id]
+  #security_groups    = [module.lb_security_group.this_security_group_id]
+  security_groups = [aws_security_group.load_balancer_security_group.id]
 }
 
 

@@ -5,7 +5,7 @@ variable "region" {
 }
 
 variable "aws_profile" {
-  default = "terraform-user-pgrm"
+
 }
 
 variable "vpc_cidr_block" {
@@ -61,6 +61,13 @@ variable "private_subnet_cidr_blocks" {
     "10.243.108.0/24",
   ]
 }
+
+variable "cloudwatch-group-name" {
+  description = "CloudWatch group name."
+  type = string
+  default = "advanced-deployment"
+}
+
 
 # variable "enable_blue_env" {
 #   description = "Enable blue environment"

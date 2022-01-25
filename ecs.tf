@@ -16,6 +16,14 @@ resource "aws_ecs_task_definition" "advanced-task" {
           "hostPort": 8080
         }
       ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "${aws_cloudwatch_log_group.advanced.name}",
+          "awslogs-region": "${var.region}",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
       "memory": 512,
       "cpu": 256
     }
@@ -25,12 +33,12 @@ resource "aws_ecs_task_definition" "advanced-task" {
   network_mode             = "awsvpc"    # Using awsvpc as our network mode as this is required for Fargate
   memory                   = 512         # Specifying the memory our container requires
   cpu                      = 256         # Specifying the CPU our container requires
-  execution_role_arn = aws_iam_role.ecsTaskExecutionRole.arn
+  execution_role_arn       = aws_iam_role.ecsTaskExecutionRole.arn
 }
 
 resource "aws_ecs_service" "advanced-service" {
   name            = "advanced-service"                        # Naming our first service
-  cluster         = aws_ecs_cluster.advanced-cluster.id             # Referencing our created Cluster
+  cluster         = aws_ecs_cluster.advanced-cluster.id       # Referencing our created Cluster
   task_definition = aws_ecs_task_definition.advanced-task.arn # Referencing the task our service will spin up
   launch_type     = "FARGATE"
   desired_count   = 1 # Setting the number of containers
@@ -43,24 +51,35 @@ resource "aws_ecs_service" "advanced-service" {
 
   network_configuration {
     # subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}", "${aws_default_subnet.default_subnet_c.id}"]
-    subnets        = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]] #count.index % length(module.vpc.public_subnets)]
+    subnets = [module.vpc.public_subnets[0], module.vpc.public_subnets[1]] #count.index % length(module.vpc.public_subnets)]
     # subnets          = ["${aws_default_subnet.default_subnet_a.id}", "${aws_default_subnet.default_subnet_b.id}"]
     assign_public_ip = true # Providing our containers with public IPs
-    # security_groups  = ["${aws_security_group.service_security_group.id}"]
-    security_groups  = [module.lb_security_group.this_security_group_id]
+    security_groups  = ["${aws_security_group.service_security_group.id}"]
+    #security_groups  = [module.lb_security_group.this_security_group_id]
   }
 }
 
 resource "aws_lb_target_group" "java-app" {
-  name     = "java-app-${random_pet.app.id}-lb"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = module.vpc.vpc_id
+  name        = "java-app-${random_pet.app.id}-lb-tg"
+  port        = 80
+  protocol    = "HTTP"
+  target_type = "ip"
+  vpc_id      = module.vpc.vpc_id
 
+  # health_check {
+  #   port     = 80
+  #   protocol = "HTTP"
+  #   timeout  = 5
+  #   interval = 10
+  # }
   health_check {
-    port     = 80
-    protocol = "HTTP"
-    timeout  = 5
-    interval = 10
+    matcher = "200,301,302"
+    path    = "/"
   }
+
+}
+
+resource "aws_cloudwatch_log_group" "advanced" {
+  name = var.cloudwatch-group-name
+  retention_in_days = 30
 }

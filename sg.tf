@@ -11,7 +11,7 @@
 
 resource "aws_security_group" "load_balancer_security_group" {
   # description = "Allow traffic into load balancer"
-  vpc_id      = module.vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
   ingress {
     description = "Allow HTTP from anywhere"
     from_port   = 80 # Allowing traffic in from port 80
@@ -38,7 +38,7 @@ resource "aws_security_group" "load_balancer_security_group" {
 
 # app security group
 resource "aws_security_group" "service_security_group" {
-  vpc_id      = module.vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
   # description = "Allow traffic from the load balancer to the app"
   ingress {
     description = "Allow all traffic from the load balancer"

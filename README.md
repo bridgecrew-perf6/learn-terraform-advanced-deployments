@@ -158,3 +158,21 @@ advanced-ecr-repo:latest
 Push the image to AWS ECR:
 
 docker push 506504484053.dkr.ecr.us-east-1.amazonaws.com/sonarqube:8.9.6-developer
+
+
+2022-02-03 
+Terraform destroy ran;
+aws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-east-1:506504484053:listener/app/main-app-deciding-firefly-lb/d53405631822a0c2/6e09f94e576a66df]
+╷
+│ Error: Instance cannot be destroyed
+│
+│   on rds.tf line 18:
+│   18: resource "aws_rds_cluster" "sonar-postgres" {
+│
+│ Resource aws_rds_cluster.sonar-postgres has lifecycle.prevent_destroy set, but the plan
+│ calls for this resource to be destroyed. To avoid this error and continue with the plan,
+│ either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target
+│ flag.
+╵
+
+

@@ -5,6 +5,10 @@ variable "region" {
 }
 
 variable "aws_profile" {
+}
+
+variable "sq_db_master_password" {
+
 
 }
 
@@ -64,8 +68,8 @@ variable "private_subnet_cidr_blocks" {
 
 variable "cloudwatch-group-name" {
   description = "CloudWatch group name."
-  type = string
-  default = "advanced-deployment"
+  type        = string
+  default     = "advanced-deployment"
 }
 
 

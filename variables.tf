@@ -8,8 +8,6 @@ variable "aws_profile" {
 }
 
 variable "sq_db_master_password" {
-
-
 }
 
 variable "vpc_cidr_block" {
@@ -68,8 +66,8 @@ variable "private_subnet_cidr_blocks" {
 
 variable "cloudwatch-group-name" {
   description = "CloudWatch group name."
-  type        = string
-  default     = "advanced-deployment"
+  type = string
+  default = "advanced-deployment"
 }
 
 

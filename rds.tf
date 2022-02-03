@@ -15,7 +15,7 @@ output "private_subnets" {
 
 
 # terraform import aws_rds_cluster.sonar-postgres  sonarqube-database-1
-resource "aws_rds_cluster" "sonar-postgres" {
+resource "aws_rds_cluster" "sonar-postgres-test" {
   db_subnet_group_name = aws_db_subnet_group.sonarqube-db.name
   cluster_identifier   = "sonarqube-db-202201"
   engine               = "aurora-postgresql"
@@ -42,17 +42,17 @@ resource "aws_rds_cluster" "sonar-postgres" {
   # database_name       = "sonar"  # forces replacement; for now we are provisioning the database manually
   database_name           = "sonar"
   backup_retention_period = 7
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 output "rds_master_username" {
-  value = aws_rds_cluster.sonar-postgres.master_username
+  value = aws_rds_cluster.sonar-postgres-test.master_username
 }
 
 output "db_endpoint" {
-  value = aws_rds_cluster.sonar-postgres.endpoint
+  value = aws_rds_cluster.sonar-postgres-test.endpoint
 }
 
 # I don't think we are actually using AWS secrets manager in our infrastructure, although the artifacts exist.

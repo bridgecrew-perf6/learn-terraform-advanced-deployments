@@ -4,9 +4,9 @@ data "aws_availability_zones" "available" {
 
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
-  version = "2.64.0"
+  version = "2.77.0"
 
-  name = "main-vpc"
+  name = "sq-test-vpc"
   cidr = var.vpc_cidr_block
 
   azs             = data.aws_availability_zones.available.names
@@ -15,4 +15,8 @@ module "vpc" {
 
   enable_nat_gateway = false
   enable_vpn_gateway = var.enable_vpn_gateway
+}
+
+output "private_subnetsvpc" {
+  value = module.vpc.private_subnets
 }

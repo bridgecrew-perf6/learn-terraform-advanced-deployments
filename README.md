@@ -169,10 +169,30 @@ aws_lb_listener.app: Refreshing state... [id=arn:aws:elasticloadbalancing:us-eas
 │   on rds.tf line 18:
 │   18: resource "aws_rds_cluster" "sonar-postgres" {
 │
-│ Resource aws_rds_cluster.sonar-postgres has lifecycle.prevent_destroy set, but the plan
+│ Resource aws_rds_cluster.sonar-postgres has lifecycle.prevent_destroy  set, but the plan
 │ calls for this resource to be destroyed. To avoid this error and continue with the plan,
 │ either disable lifecycle.prevent_destroy or reduce the scope of the plan using the -target
 │ flag.
 ╵
 
 
+created IAM policy
+allow-iam-detach
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "iam:DetachRolePolicy",
+                "iam:DeleteRolePolicy",
+                "iam:DeletePolicy",
+                "iam:DetachUserPolicy",
+                "iam:DeleteRole"
+            ],
+            "Resource": "arn:aws:iam::506504484053:role/*"
+        }
+    ]
+}

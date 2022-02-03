@@ -148,3 +148,13 @@ mvn clean package && docker build -t spring-boot-demo .
 aws ecr get-login-password --region us-east-1 --profile terraform-user-pgrm | docker login --username AWS --password-stdin 506504484053.dkr.ecr.us-east-1.amazonaws.com
 
 docker tag spring-boot-demo:latest 506504484053.dkr.ecr.us-east-1.amazonaws.com/advanced-ecr-repo:latest && docker push 506504484053.dkr.ecr.us-east-1.amazonaws.com/advanced-ecr-repo:latest
+
+sonarqube container
+
+docker tag sonarqube:8.6.9-developer 506504484053.dkr.ecr.us-east-1.amazonaws.com/sonarqube:8.9.6-developer
+
+advanced-ecr-repo:latest
+
+Push the image to AWS ECR:
+
+docker push 506504484053.dkr.ecr.us-east-1.amazonaws.com/sonarqube:8.9.6-developer

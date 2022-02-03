@@ -37,11 +37,12 @@ resource "aws_ecs_task_definition" "advanced-task" {
 }
 
 resource "aws_ecs_service" "advanced-service" {
-  name            = "advanced-service"                        # Naming our first service
-  cluster         = aws_ecs_cluster.advanced-cluster.id       # Referencing our created Cluster
-  task_definition = aws_ecs_task_definition.advanced-task.arn # Referencing the task our service will spin up
-  launch_type     = "FARGATE"
-  desired_count   = 1 # Setting the number of containers
+  name                              = "advanced-service"                        # Naming our first service
+  cluster                           = aws_ecs_cluster.advanced-cluster.id       # Referencing our created Cluster
+  task_definition                   = aws_ecs_task_definition.advanced-task.arn # Referencing the task our service will spin up
+  launch_type                       = "FARGATE"
+  desired_count                     = 1 # Setting the number of containers
+  health_check_grace_period_seconds = 30
 
   load_balancer {
     target_group_arn = aws_lb_target_group.java-app.arn # Referencing our target group
@@ -80,6 +81,6 @@ resource "aws_lb_target_group" "java-app" {
 }
 
 resource "aws_cloudwatch_log_group" "advanced" {
-  name = var.cloudwatch-group-name
+  name              = var.cloudwatch-group-name
   retention_in_days = 30
 }
